@@ -1,0 +1,49 @@
+{% extends "auth_base.html" %}
+{% load static %}
+
+{% block title %}
+verify Otp
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="form-container">
+                <!-- cross icon -->
+                <a href="{% url 'index_page' %}" class="text-white">
+                    <i class="fa-solid fa-x fa-xl crossHo"></i>
+                </a>
+                <p class="title">verify Otp</p>
+                <!-- ==================== message start ============= -->
+                {% if messages %}
+                {% for m in messages %}
+                {% if m.tags == "success" %}
+                <p class="text-center text-success fs-5" id="hideMessage">{{m}}</p>
+                {% else %}
+                <p class="text-center text-danger fs-5" id="hideMessage">{{m}}</p>
+                {% endif %}
+
+                {% endfor %}
+                {% endif %}
+                <!-- ==================== message end ============== -->
+
+                <form class="form" method="POST" action="{% url 'verify_otp' %}?user_id={{ user_id }}">
+                {% csrf_token %}
+                
+                <input type="text" name="user_id" value="{{ user_id }}"readonly>
+
+                <div class="input-group">    
+                    <label for="otp">Enter 6-Digit OTP</label>
+                    <input type="number" min="0" name="otp" id="otp" placeholder="123456" required>
+                </div>
+
+                <button class="sign mt-3">Verify OTP</button>
+            </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

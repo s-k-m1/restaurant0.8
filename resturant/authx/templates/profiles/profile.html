@@ -1,0 +1,110 @@
+{% extends "auth_base.html" %}
+{% load static %}
+
+{% block title %}User Profile{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="form-container p-4">
+
+                <!-- BACK BUTTON -->
+                <a href="{% url 'menu_page' %}" class="text-white mb-3 d-inline-block">
+                    <i class="fa-solid fa-arrow-left fa-xl crossHo"></i>
+                </a>
+
+                <!-- PROFILE HEADER -->
+                <div class="text-center mb-4">
+
+                    {% if profile.profile_pic %}
+                        <img src="{{ profile.profile_pic.url }}"
+                             class="rounded-circle mb-3"
+                             width="110" height="110"
+                             style="object-fit: cover;">
+                    {% else %}
+                        <i class="fa-solid fa-circle-user fa-5x text-secondary mb-3"></i>
+                    {% endif %}
+
+                    <h2 class="title mb-0">{{ profile.user.full_name }}</h2>
+                    <p class="text-white-50">@{{ profile.user.username }}</p>
+
+                </div>
+
+                <hr class="text-secondary">
+
+                <!-- PROFILE DETAILS -->
+                <div class="profile-details text-white">
+
+                    <div class="detail-group mb-3">
+                        <label class="text-white-50 small d-block">Email</label>
+                        <span>{{ profile.user.email|default:"Not set" }}</span>
+                    </div>
+
+                    <div class="detail-group mb-3">
+                        <label class="text-white-50 small d-block">Phone</label>
+                        <span>{{ profile.user.phone_number|default:"Not set" }}</span>
+                    </div>
+
+                    <div class="detail-group mb-3">
+                        <label class="text-white-50 small d-block">Gender</label>
+                        <span>{{ profile.gender|default:"Not set" }}</span>
+                    </div>
+
+                    <div class="detail-group mb-3">
+                        <label class="text-white-50 small d-block">Date of Birth</label>
+                        <span>{{ profile.date_of_birth|default:"Not set" }}</span>
+                    </div>
+
+                    <div class="detail-group mb-3">
+                        <label class="text-white-50 small d-block">Member Since</label>
+                        <span>{{ profile.created_at|date:"F d, Y" }}</span>
+                    </div>
+
+                    <div class="detail-group mb-3">
+                        <label class="text-white-50 small d-block">Last Updated</label>
+                        <span>
+                            {% if profile.updated_at %}
+                                {{ profile.updated_at|date:"F d, Y" }}
+                            {% else %}
+                                Never updated
+                            {% endif %}
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="mt-4 d-grid gap-2">
+
+                    <a href="{% url 'edit_profile' %}" class="btn btn-outline-warning">
+                        <i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile
+                    </a>
+
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger">
+                        <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- STYLES -->
+<style>
+.detail-group {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.detail-group:last-child {
+    border-bottom: none;
+}
+</style>
+
+{% endblock content %}
